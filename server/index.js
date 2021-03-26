@@ -5,6 +5,7 @@ const massive = require('massive');
 const session = require('express-session'); 
 const cors = require('cors');
 const authCtrl = require('./Controllers/authCtrl');
+const authenticateUser = require('./middlewares/authenticateUser'); 
 
 const { PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
@@ -23,7 +24,10 @@ app.post('autho/register', authCtrl.register);
 app.post('auth/login', authCtrl.login); 
 app.delete('/auth/logout', authCtrl.logout);
 
-
+// protected endpoints
+app.get('/api/secret', authenticateUser, (req,res) => {
+  res.status(200).send('You got the secret,admin!')
+})
 massive ({
   connectionString:CONNECTION_STRING,
   ssl:{rejectUnauthorized:0}

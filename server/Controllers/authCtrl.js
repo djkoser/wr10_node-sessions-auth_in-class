@@ -38,7 +38,7 @@ module.exports = {
   },
   login: (req, res) => {
     // get db instance
-    const db = req.app('db');
+    const db = req.app.get('db');
     // get necessary info rom req.body
     const { email, password } = req.body;
     // check if that user exists, if they do NOT, reject the request
